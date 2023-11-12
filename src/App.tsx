@@ -47,8 +47,23 @@ function App() {
   const filterTask = (value: FilterType) => {
     setFilter(value)
   }
+  // смена статуса таски
+  const changeTaskStatus = (taskId: string) => {
+    let newTask = tasks.find(task => task.id === taskId)
+    
+    
+    if (newTask) {
+      newTask.isDone = !newTask.isDone
+    }
+    
+    setTasks([...tasks])
+    
+
+    //setTasks([...newTasks])
+  }
 
   let taskForTodolist = tasks;
+  
 
   if (filter === "Active") {
     taskForTodolist = tasks.filter(task => task.isDone === false)
@@ -68,9 +83,11 @@ function App() {
       <Todolist
         title={"what to lern"}
         tasks={taskForTodolist}
+        filter={filter}
         removeTask={removeTask}
         filterTask={filterTask}
-        addTask = {addTask}
+        addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
       />
 
 
