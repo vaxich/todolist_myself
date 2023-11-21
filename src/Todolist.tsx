@@ -8,10 +8,12 @@ type propsType = {
   title: string
   tasks: Array<TaskType>
   filter: FilterType
-  removeTask: (id: string) => void
-  filterTask: (value: FilterType) => void
-  addTask: (title: string) => void
-  changeTaskStatus: (taskId: string) => void
+  todolistId: string
+  removeTask: (todolistId: string, id: string) => void
+  filterTask: (todolistId: string, value: FilterType) => void
+  addTask: (todolistId: string, title: string) => void
+  changeTaskStatus: (todolistId: string, taskId: string) => void
+  removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = (props: propsType) => {
@@ -24,7 +26,7 @@ export const Todolist = (props: propsType) => {
 
   const addTask = () => {
     if (title.trim() !== "") {
-      props.addTask(title.trim());
+      props.addTask(props.todolistId, title.trim());
       setTitle("");
     } else {
       seterror("Title is requare")
@@ -43,21 +45,25 @@ export const Todolist = (props: propsType) => {
     }
   }
   const onAllClickHandler = () => {
-    props.filterTask("All")
+    props.filterTask(props.todolistId, "All")
   }
   const onActiveClickHandler = () => {
-    props.filterTask("Active")
+    props.filterTask(props.todolistId, "Active")
   }
   const onCompleetedClickHandler = () => {
-    props.filterTask("Completed")
+    props.filterTask(props.todolistId, "Completed")
   }
   const changeTaskStatus = (taskId: string) => {
-    props.changeTaskStatus(taskId)
+    props.changeTaskStatus(props.todolistId, taskId)
+  }
+  const removeTodolist = () => {
+    props.removeTodolist(props.todolistId)
   }
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3> {props.title} <button onClick={removeTodolist}>X</button></h3>
+      
       <div>
         <input
           className={error ? "error" : ""}
@@ -74,7 +80,7 @@ export const Todolist = (props: propsType) => {
             <li key={task.id} className={task.isDone ? "is-done" : ""}>
               <input type="checkbox" checked={task.isDone} onChange={() => changeTaskStatus(task.id)} />
               <span>{task.title}</span>
-              <button onClick={() => { props.removeTask(task.id) }}>X</button>
+              <button onClick={() => { props.removeTask(props.todolistId, task.id) }}>X</button>
             </li>
           )
         })}
