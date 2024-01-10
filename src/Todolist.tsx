@@ -3,6 +3,8 @@ import { FilterType, TaskType } from "./App"
 import './App.css';
 import { AddItemForm } from "./AddItemForm";
 import { EditableSpan } from "./EditableSpan";
+import { Button, Checkbox, IconButton } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 
 
 
@@ -27,9 +29,9 @@ export const Todolist = (props: propsType) => {
 
 
 
-  const addTask = (title:string) => {
+  const addTask = (title: string) => {
     props.addTask(props.todolistId, title)
-    
+
 
   }
 
@@ -67,34 +69,47 @@ export const Todolist = (props: propsType) => {
 
   return (
     <div>
-      <h3> <EditableSpan value={props.title} callBack={changeTodolistTitle}/> <button onClick={removeTodolist}>X</button></h3>
+      <h3> <EditableSpan value={props.title} callBack={changeTodolistTitle} /> 
+      {/* <button onClick={removeTodolist}>X</button> */}
+      <IconButton onClick={removeTodolist}>
+                <Delete />
+              </IconButton>
+      </h3>
       
+
       <div>
-        <AddItemForm callBack={addTask}/>
-      
+        <AddItemForm callBack={addTask} />
+
       </div>
-      <ul>
+      <div>
         {props.tasks.map((task) => {
 
-          const changeTaskTitle = ( title: string) => {
-            props.changeTaskTitle(props.todolistId, task.id, title )
+          const changeTaskTitle = (title: string) => {
+            props.changeTaskTitle(props.todolistId, task.id, title)
           }
 
           return (
-            <li key={task.id} className={task.isDone ? "is-done" : ""}>
-              <input type="checkbox" checked={task.isDone} onChange={() => changeTaskStatus(task.id)} />
-              {/* <span>{task.title}---</span> */}
-              <EditableSpan value={task.title} callBack={changeTaskTitle}/>
-              <button onClick={() => { props.removeTask(props.todolistId, task.id) }}>X</button>
-            </li>
+            <div key={task.id} className={task.isDone ? "is-done" : ""}>
+              <Checkbox 
+              color="primary"
+              checked={task.isDone} 
+              onChange={() => changeTaskStatus(task.id)} 
+              />
+              
+              <EditableSpan value={task.title} callBack={changeTaskTitle} />
+              
+              <IconButton onClick={() => { props.removeTask(props.todolistId, task.id) }}>
+                <Delete />
+              </IconButton>
+            </div>
           )
         })}
 
-      </ul>
+      </div>
       <div>
-        <button className={props.filter === "All" ? "active-filter" : ""} onClick={onAllClickHandler}>All</button>
-        <button className={props.filter === "Active" ? "active-filter" : ""} onClick={onActiveClickHandler}>Active</button>
-        <button className={props.filter === "Completed" ? "active-filter" : ""} onClick={onCompleetedClickHandler}>Completed</button>
+        <Button variant={props.filter === "All" ? "contained" : "text"} color="primary"  onClick={onAllClickHandler}>All</Button>
+        <Button variant={props.filter === "Active" ? "contained" : "text"} color="primary" onClick={onActiveClickHandler}>Active</Button>
+        <Button variant={props.filter === "Completed" ? "contained" : "text"} color="primary" onClick={onCompleetedClickHandler}>Completed</Button>
       </div>
     </div>
   )

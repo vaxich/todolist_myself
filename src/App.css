@@ -1,22 +1,8 @@
-.App {
-  text-align: center;
+/* .is-done {
+    opacity: 0.5;
+    display: inline;
 }
 
-
-
-.error {
-  border: red 1px solid;
-}
-
-.error-message {
-  color: red;
-}
-
-
-.active-filter {
-  background-color: aquamarine;
-}
-
-.is-done {
-  opacity: 0.5;
-}
+.task {
+    display: inline;
+} */
