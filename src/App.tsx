@@ -97,7 +97,7 @@ function App() {
   }
   const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
     let todolistTasks = tasks[todolistId] // таски одного тудулиста
-    let filteredTasks = todolistTasks.map(t => t.id === taskId ? { ...t, title: title } : t) // меняем статус нужной таскм
+    let filteredTasks = todolistTasks.map(t => t.id === taskId ? { ...t, title: title } : t) // меняем титл нужной таскм
     tasks[todolistId] = filteredTasks // перезаписываем
     setTasks({ ...tasks })// обновляем стейт
   }
